@@ -5,8 +5,8 @@ metadata:
 spec:
   params:
     - name: GIT_URL
-      type: string 
-      default: <GITHUB_URL>
+      type: string
+      default: https://github.com/mitul01/robotshop.git
     - name: REVISION
       type: string  
       default: master

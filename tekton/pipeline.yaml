@@ -8,7 +8,7 @@ spec:
   params:
     - name: GIT_URL
       type: string 
-      default: <GITHUB>
+      default: https://github.com/mitul01/robotshop.git
     - name: BUILDER_IMAGE
       type: string
       default: https://quay.io/buildah/stable
