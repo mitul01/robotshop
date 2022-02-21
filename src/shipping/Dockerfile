@@ -15,7 +15,7 @@ RUN mvn package
 #
 # Run
 #
-FROM openjdk:8-jdk
+FROM docker.io/openjdk:8-jdk
 
 EXPOSE 8080
 
