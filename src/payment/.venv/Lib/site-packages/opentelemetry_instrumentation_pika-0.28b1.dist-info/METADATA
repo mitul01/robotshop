@@ -1,0 +1,56 @@
+Metadata-Version: 2.1
+Name: opentelemetry-instrumentation-pika
+Version: 0.28b1
+Summary: OpenTelemetry pika instrumentation
+Home-page: https://github.com/open-telemetry/opentelemetry-python-contrib/instrumentation/opentelemetry-instrumentation-pika
+Author: OpenTelemetry Authors
+Author-email: cncf-opentelemetry-contributors@lists.cncf.io
+License: Apache-2.0
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.6
+Description-Content-Type: text/x-rst
+Requires-Dist: opentelemetry-api (~=1.5)
+Requires-Dist: wrapt (<2.0.0,>=1.0.0)
+Requires-Dist: packaging (>=20.0)
+Provides-Extra: instruments
+Requires-Dist: pika (>=0.12.0) ; extra == 'instruments'
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: wrapt (<2.0.0,>=1.0.0) ; extra == 'test'
+Requires-Dist: opentelemetry-test-utils (==0.28b1) ; extra == 'test'
+Requires-Dist: pika (>=0.12.0) ; extra == 'test'
+
+OpenTelemetry pika Instrumentation
+==================================
+
+|pypi|
+
+.. |pypi| image:: https://badge.fury.io/py/opentelemetry-instrumentation-pika.svg
+   :target: https://pypi.org/project/opentelemetry-instrumentation-pika/
+
+This library allows tracing requests made by the pika library.
+
+Installation
+------------
+
+::
+
+    pip install opentelemetry-instrumentation-pika
+
+References
+----------
+
+* `OpenTelemetry pika/ Tracing <https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation/pika/pika.html>`_
+* `OpenTelemetry Project <https://opentelemetry.io/>`_
+
+

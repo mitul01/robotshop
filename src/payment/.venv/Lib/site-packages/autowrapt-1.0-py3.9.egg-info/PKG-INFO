@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: autowrapt
+Version: 1.0
+Summary: Boostrap mechanism for monkey patches.
+Home-page: https://github.com/GrahamDumpleton/autowrapt
+Author: Graham Dumpleton
+Author-email: Graham.Dumpleton@gmail.com
+License: BSD
+Platform: UNKNOWN
+
+UNKNOWN
+

@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: opentelemetry-instrumentation-sqlite3
+Version: 0.28b1
+Summary: OpenTelemetry SQLite3 instrumentation
+Home-page: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-sqlite3
+Author: OpenTelemetry Authors
+Author-email: cncf-opentelemetry-contributors@lists.cncf.io
+License: Apache-2.0
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.6
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: opentelemetry-api (~=1.3)
+Requires-Dist: opentelemetry-instrumentation-dbapi (==0.28b1)
+Requires-Dist: opentelemetry-instrumentation (==0.28b1)
+Provides-Extra: instruments
+Provides-Extra: test
+Requires-Dist: opentelemetry-test-utils (==0.28b1) ; extra == 'test'
+
+OpenTelemetry SQLite3 Instrumentation
+=====================================
+
+|pypi|
+
+.. |pypi| image:: https://badge.fury.io/py/opentelemetry-instrumentation-sqlite3.svg
+   :target: https://pypi.org/project/opentelemetry-instrumentation-sqlite3/
+
+Installation
+------------
+
+::
+
+    pip install opentelemetry-instrumentation-sqlite3
+
+
+References
+----------
+* `OpenTelemetry SQLite3 Instrumentation <https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation/sqlite3/sqlite3.html>`_
+* `OpenTelemetry Project <https://opentelemetry.io/>`_
+* `OpenTelemetry Python Examples <https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples>`_
+
+
+

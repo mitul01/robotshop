@@ -1,0 +1,3 @@
+[opentelemetry_traces_exporter]
+jaeger = opentelemetry.exporter.jaeger.proto.grpc:JaegerExporter
+

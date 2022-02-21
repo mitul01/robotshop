@@ -1,0 +1,14 @@
+MANIFEST.in
+README.rst
+autowrapt-init.pth
+setup.cfg
+setup.py
+autowrapt.egg-info/PKG-INFO
+autowrapt.egg-info/SOURCES.txt
+autowrapt.egg-info/dependency_links.txt
+autowrapt.egg-info/entry_points.txt
+autowrapt.egg-info/requires.txt
+autowrapt.egg-info/top_level.txt
+src/__init__.py
+src/bootstrap.py
+src/examples.py

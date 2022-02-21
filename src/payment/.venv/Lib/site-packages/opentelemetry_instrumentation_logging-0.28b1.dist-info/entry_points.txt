@@ -1,0 +1,3 @@
+[opentelemetry_instrumentor]
+logging = opentelemetry.instrumentation.logging:LoggingInstrumentor
+

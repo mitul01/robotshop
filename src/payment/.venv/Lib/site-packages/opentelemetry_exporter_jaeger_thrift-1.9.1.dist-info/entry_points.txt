@@ -1,0 +1,3 @@
+[opentelemetry_traces_exporter]
+jaeger_thrift = opentelemetry.exporter.jaeger.thrift:JaegerExporter
+

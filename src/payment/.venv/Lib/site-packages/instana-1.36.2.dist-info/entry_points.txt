@@ -1,0 +1,15 @@
+[django]
+string = instana:load
+
+[django19]
+string = instana:load
+
+[flask]
+string = instana:load
+
+[instana]
+string = instana:load
+
+[runtime]
+string = instana:load
+
