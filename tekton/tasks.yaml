@@ -58,7 +58,7 @@ spec:
     default: "false"
   - name: FORMAT
     description: The format of the built container, oci or docker
-    default: "docker"
+    default: "oci"
 
   results:
   - name: IMAGE_DIGEST
