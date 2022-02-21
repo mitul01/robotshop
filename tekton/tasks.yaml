@@ -118,14 +118,14 @@ spec:
 
   steps:
   - name: create-files
-    image: docker.io/mikefarah/yq
+    image: docker.io/mikefarah/yq:3.4.1
     securityContext:
       privileged: true
     script: |
       echo Editing yaml file for the specified service.....
-      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml metadata.name $(params.SERVICE_NAME)-$(params.SERVICE_VERSION)
-      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml spec.template.spec.containers[0].name $(params.SERVICE_NAME)
-      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml spec.template.spec.containers[0].image $(params.IMAGE_REPOSITORY)/$(params.SERVICE_NAME):$(params.SERVICE_VERSION)
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml "metadata.name" "$(params.SERVICE_NAME)-$(params.SERVICE_VERSION)"
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml "spec.template.spec.containers[0].name" "$(params.SERVICE_NAME)"
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml "spec.template.spec.containers[0].image" "$(params.IMAGE_REPOSITORY)/$(params.SERVICE_NAME):$(params.SERVICE_VERSION)"
 
   - name: git-push
     image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.12.1
@@ -137,7 +137,7 @@ spec:
       cat ~/.gitconfig
       git config --global user.email "mitultandon@gmail.com"
       git config --global user.name "Mitul Tandon"
-      git add .
+      git add manifests/$(params.SERVICE_NAME)-deployment.yaml
       MESSAGE="Automated commit by Tekton: $(params.SERVICE_NAME):$(params.SERVICE_VERSION)"
       git commit -m "$MESSAGE"
       git push
