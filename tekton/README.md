@@ -5,4 +5,5 @@ tkn pipeline start build-deploy-canary \
      --param SERVICE_VERSION=v1.1 \
      --param IMAGE_REPOSITORY=docker.io/mitultan \
      --workspace name=build-deploy-workspace,claimName=ci-cd-workspace
+     --serviceaccount=build-bot
 ```
