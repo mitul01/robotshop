@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: test-run-
+spec:
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: build-deploy-canary
+  params:
+    - name: GIT_URL
+      value: https://github.com/mitul01/robotshop.git
+    - name: BUILDER_IMAGE
+      value: https://quay.io/buildah/stable:v1.14.0
+    - name: REVISION
+      value: main
+    - name: SERVICE_NAME
+      value: cart
+    - name: IMAGE_REPOSITORY
+      value: docker.io/mitultan
+    - name: SERVICE_VERSION
+      value: v1.1
+  workspaces:
+    - name: build-deploy-workspace
+      persistentVolumeClaim:
+        claimName: ci-cd-workspace

@@ -1,0 +1,85 @@
+# Need to change YOUR_CLUSTER and YOUR_API_TOKEN accordingly
+
+apiVersion: apps/v1
+# Kubernetes versions after 1.9.0 should use apps/v1
+# Kubernetes version 1.8.x should use apps/v1beta2
+# Kubernetes versions before 1.8.0 should use apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: wavefront-proxy
+    name: wavefront-proxy
+  name: wavefront-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wavefront-proxy
+  template:
+    metadata:
+      labels:
+        app: wavefront-proxy
+    spec:
+      containers:
+      - name: wavefront-proxy
+        image: projects.registry.vmware.com/tanzu_observability/proxy:10.13
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: WAVEFRONT_URL
+          valueFrom:
+            secretKeyRef:
+              name: proxy-secret
+              key: url
+        - name: WAVEFRONT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: proxy-secret
+              key: token
+        - name: WAVEFRONT_PROXY_ARGS
+          value: --traceListenerPorts 30000 --histogramDistListenerPorts 40000 --customTracingListenerPorts 30001 --traceJaegerGrpcListenerPorts 14250 traceJaegerApplicationName "robotShop"
+        ports:
+        - containerPort: 2878
+          protocol: TCP
+        - containerPort: 30000
+          protocol: TCP
+        - containerPort: 40000
+          protocol: TCP
+        - containerPort: 30001
+          protocol: TCP
+        - containerPort: 14250
+          protocol: TCP
+        securityContext:
+          privileged: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wavefront-proxy
+  labels:
+    app: wavefront-proxy
+  namespace: default
+spec:
+  ports:
+  - name: wavefront
+    port: 2878
+    protocol: TCP
+  - name: traces
+    port: 30000
+    protocol: TCP
+  - name: histogram
+    port: 40000
+    protocol: TCP
+  - name: customtracing
+    port: 30001
+    protocol: TCP
+  - name: jaegargrpc
+    port: 14250
+    protocol: TCP
+  # Uncomment the below lines to consume Zipkin/Istio traces
+  #- name: http
+  #  port: 9411
+  #  targetPort: 9411
+  #  protocol: TCP
+  selector:
+    app: wavefront-proxy
