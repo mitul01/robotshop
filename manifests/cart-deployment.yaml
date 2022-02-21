@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cart-v1.1
+  name: cart-v2
   labels:
     service: cart
 spec:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cart
-          image: docker.io/mitultan/cart:v1.1
+          image: docker.io/mitultan/cart:v2
           #image: {{ .Values.image.repo }}/rs-cart:{{ .Values.image.version }}
           imagePullPolicy: IfNotPresent
           # agent networking access
