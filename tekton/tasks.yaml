@@ -1,0 +1,143 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: git-clone
+spec:
+  params:
+    - name: GIT_URL
+      type: string 
+      default: <GITHUB_URL>
+    - name: REVISION
+      type: string  
+      default: master
+  steps:
+    - name: git-clone
+      image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.12.1
+      securityContext:
+        privileged: true
+      script: |
+        cd $(workspaces.source.path)
+        rm -rf robotshop
+        git clone -b "$(params.REVISION)" "$(params.GIT_URL)"
+        cd robotshop
+        RESULT_SHA="$(git rev-parse HEAD | tr -d '\n')"
+        pwd
+        echo -n "$RESULT_SHA"
+  workspaces:
+    - name: source
+      description: Location of source code
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-service
+spec:
+  workspaces:
+  - name: source
+
+  params:
+  - name: IMAGE_REPOSITORY
+    description: Repository where buildah will push new image
+  - name: BUILDER_IMAGE
+    description: The location of the buildah builder image
+    default: quay.io/buildah/stable
+  - name: DOCKERFILE
+    description: Path to the Dockerfile to build
+    default: ./Dockerfile
+  - name: SERVICE_NAME
+    description: Path to the microservice directory to use as context
+    default: details
+  - name: SERVICE_VERSION
+    description: Version of newly built service
+    default: latest
+  - name: CONTEXT 
+    description: Path to Dockerfile
+    default: .
+  - name: TLSVERIFY
+    description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+    default: "false"
+  - name: FORMAT
+    description: The format of the built container, oci or docker
+    default: "docker"
+
+  results:
+  - name: IMAGE_DIGEST
+    description: Digest of the image just built.
+
+  steps:
+  - name: build
+    image: $(params.BUILDER_IMAGE)
+    # workingDir: $(workspaces.source.path)
+    # command: ['buildah', 'bud', '--format=$(params.FORMAT)', '--tls-verify=$(params.TLSVERIFY)', '--no-cache', '-f', '$(params.DOCKERFILE)', '-t', '$(params.IMAGE)', '$(params.CONTEXT)']
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+    script: |
+      cd $(workspaces.source.path)/robotshop/src/$(params.SERVICE_NAME)
+      buildah bud --format=$(params.FORMAT) --tls-verify=$(params.TLSVERIFY) --no-cache -f $(params.DOCKERFILE) -t $(params.IMAGE_REPOSITORY)/$(params.SERVICE_NAME):$(params.SERVICE_VERSION) $(params.CONTEXT)
+
+  - name: push
+    image: $(params.BUILDER_IMAGE)
+    env:
+    - name: REGISTRY_AUTH_FILE
+      value: /home/builder/.docker/config.json
+    # workingDir: $(workspaces.source)
+    # command: ['buildah', 'push', '--tls-verify=$(params.TLSVERIFY)', '$(params.IMAGE)']
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+    script: |
+      cd $(workspaces.source.path)/robotshop/src/$(params.SERVICE_NAME)
+      cat ~/.docker/config.json
+      buildah push --authfile ~/.docker/config.json --tls-verify=$(params.TLSVERIFY) $(params.IMAGE_REPOSITORY)/$(params.SERVICE_NAME):$(params.SERVICE_VERSION)
+
+  volumes:
+  - name: varlibcontainers
+    emptyDir: {}
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: canary-rollout
+spec:
+  workspaces:
+  - name: source
+
+  params:
+  - name: SERVICE_NAME
+    description: Path to the microservice directory to use as context.
+    default: details
+  - name: IMAGE_REPOSITORY
+    description: Repository where buildah will push new image
+  - name: SERVICE_VERSION
+    description: Version of newly built service
+
+  steps:
+  - name: create-files
+    image: docker.io/mikefarah/yq
+    securityContext:
+      privileged: true
+    script: |
+      echo Editing yaml file for the specified service.....
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml metadata.name $(params.SERVICE_NAME)-$(params.SERVICE_VERSION)
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml spec.template.spec.containers[0].name $(params.SERVICE_NAME)
+      yq w -i $(workspaces.source.path)/robotshop/manifests/$(params.SERVICE_NAME)-deployment.yaml spec.template.spec.containers[0].image $(params.IMAGE_REPOSITORY)/$(params.SERVICE_NAME):$(params.SERVICE_VERSION)
+
+  - name: git-push
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.12.1
+    securityContext:
+      privileged: true
+    script: |
+      cd $(workspaces.source.path)/robotshop
+      echo $(git status)
+      cat ~/.gitconfig
+      git config --global user.email "mitultandon@gmail.com"
+      git config --global user.name "Mitul Tandon"
+      git add .
+      MESSAGE="Automated commit by Tekton: $(params.SERVICE_NAME):$(params.SERVICE_VERSION)"
+      git commit -m "$MESSAGE"
+      git push

@@ -1,0 +1,70 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-deploy-canary
+spec:
+  workspaces:
+    - name: build-deploy-workspace
+  params:
+    - name: GIT_URL
+      type: string 
+      default: <GITHUB>
+    - name: BUILDER_IMAGE
+      type: string
+      default: https://quay.io/buildah/stable
+    - name: REVISION
+      type: string  
+      default: master
+    - name: SERVICE_NAME
+      type: string  
+      default: productpage
+    - name: SERVICE_VERSION
+      type: string
+      default: latest
+    - name: IMAGE_REPOSITORY
+      type: string
+      default: docker.io/mitultan
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+      params: 
+        - name: GIT_URL
+          value: "$(params.GIT_URL)"
+        - name: REVISION
+          value: "$(params.REVISION)"
+      workspaces:
+        - name: source
+          workspace: build-deploy-workspace
+    - name: build-service
+      taskRef:
+        name: build-service
+      params:
+        - name: SERVICE_NAME
+          value: "$(params.SERVICE_NAME)"
+        - name: IMAGE_REPOSITORY
+          value: "$(params.IMAGE_REPOSITORY)"
+        - name: SERVICE_VERSION
+          value: "$(params.SERVICE_VERSION)"
+      workspaces:
+        - name: source
+          workspace: build-deploy-workspace
+      runAfter:
+        - git-clone
+    - name: canary-rollout
+      taskRef:
+        name: canary-rollout
+      params: 
+        - name: SERVICE_NAME
+          value: "$(params.SERVICE_NAME)"
+        - name: IMAGE_REPOSITORY
+          value: "$(params.IMAGE_REPOSITORY)"
+        - name: SERVICE_VERSION
+          value: "$(params.SERVICE_VERSION)"
+      workspaces:
+        - name: source
+          workspace: build-deploy-workspace
+      runAfter:
+        - build-service
+      
+        
