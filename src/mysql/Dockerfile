@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM docker.io/mysql:5.7
 
 VOLUME /data
 
