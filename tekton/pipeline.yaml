@@ -23,7 +23,7 @@ spec:
       default: latest
     - name: IMAGE_REPOSITORY
       type: string
-      default: docker.io/mitultan
+      default: quay.io/mitultandon
   tasks:
     - name: git-clone
       taskRef:
