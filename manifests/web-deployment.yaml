@@ -27,4 +27,25 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
+      # keycloak sidecar 
+      - name: gatekeeper
+        image: quay.io/keycloak/keycloak-gatekeeper
+        args:
+        - --config=/etc/keycloak-gatekeeper.conf
+        ports:
+        - containerPort: 3000
+          name: service
+        volumeMounts:
+        - name: gatekeeper-config
+          mountPath: /etc/keycloak-gatekeeper.conf
+          subPath: keycloak-gatekeeper.conf
+        - name: gatekeeper-files
+          mountPath: /html
+      volumes:
+      - name : gatekeeper-config
+        configMap:
+          name: gatekeeper-config
+      - name : gatekeeper-files
+        configMap:
+          name: gatekeeper-files
       restartPolicy: Always
