@@ -7,7 +7,7 @@ metadata:
 data:
   keycloak-gatekeeper.conf: |+
     # is the url for retrieve the OpenID configuration - normally the <server>/auth/realms/<realm_name>
-    discovery-url: https://keycloak.192.168.232.131.nip.io/realms/local
+    discovery-url: https://keycloak.192.168.232.131.nip.io/realms/local # change minikube ip
     # skip tls verify
     skip-openid-provider-tls-verify: true
     # the client id for the 'client' application
@@ -23,7 +23,7 @@ data:
     # the location of a private key for TLS
     tls-private-key:
     # the redirection url, essentially the site url, note: /oauth/callback is added at the end
-    redirection-url: http://web.192.168.232.131.nip.io
+    redirection-url: http://web.192.168.232.131.nip.io # change minikube ip
     secure-cookie: false
     # the encryption key used to encode the session state
     encryption-key: vGcLt8ZUdPX5fXhtLZaPHZkGWHZrT6aa
