@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  labels:
+    service: catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: catalogue
+  template:
+    metadata:
+      labels:
+        service: catalogue
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: robot-shop
+      {{ end }}
+      containers:
+      - name: catalogue
+        image: {{.Values.image.catalogue-image}}
+        #image: {{ .Values.image.repo }}/rs-catalogue:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      # sidecar agent
+      - name: jaeger-agent
+        image: jaegertracing/jaeger-agent:1.30.0
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 5775
+            name: zk-compact-trft
+            protocol: UDP
+          - containerPort: 5778
+            name: config-rest
+            protocol: TCP
+          - containerPort: 6831
+            name: jg-compact-trft
+            protocol: UDP
+          - containerPort: 6832
+            name: jg-binary-trft
+            protocol: UDP
+          - containerPort: 14271
+            name: admin-http
+            protocol: TCP
+        args:
+          #- --reporter.grpc.host-port=dns:///jaeger-collector-headless.observability:14250
+          - --reporter.type=grpc
+          - --reporter.grpc.host-port=wavefront-proxy.default:14250
+      restartPolicy: Always

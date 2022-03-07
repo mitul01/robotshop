@@ -1,0 +1,43 @@
+# Registry and rpository for Docker images
+# Default is docker/robotshop/image:latest
+image:
+  repo: robotshop
+  version: latest
+  pullPolicy: IfNotPresent
+  cart-image: docker.io/mitultan/cart:v2
+  catalogue-image: docker.io/mitultan/catalogue:v1
+  user-image: docker.io/mitultan/user:v1 
+  payment-image: docker.io/mitultan/payment:v2
+
+ingress:
+  web: web.192.168.232.131.nip.io
+  keycloak: keycloak.192.168.232.131.nip.io
+
+# Alternative payment gateway URL
+# Default is https://www.paypal.com
+payment:
+  gateway: null
+  #gateway: https://www.worldpay.com
+
+# EUM configuration
+# Provide your key and set the endpoint
+eum:
+  key: KEY
+  url: https://eum-eu-west-1.instana.io
+  #url: https://eum-us-west-2.instana.io
+
+# Pod Security Policy
+psp:
+  enabled: false
+
+# For the mini ones minikube, minishift set to true
+nodeport: true
+
+# "special" Openshift. Set to true when deploying to any openshift flavour
+openshift: false
+
+# Storage class to use with redis statefulset.
+redis:
+  storageClassName: standard
+
+ocCreateRoute: false
