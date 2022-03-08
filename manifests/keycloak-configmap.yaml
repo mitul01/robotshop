@@ -13,7 +13,7 @@ data:
     # the client id for the 'client' application
     client-id: gatekeeper
     # the secret associated to the 'client' application
-    client-secret: liPl8e22kKQhIypQsS0AtVy3n8s4aTnf
+    client-secret: lFFsSdnDJBbZrFfs3JEg0emAbiKyRCBg
     # the interface definition you wish the proxy to listen, all interfaces is specified as ':<port>', unix sockets as unix://<REL_PATH>|</ABS PATH>
     listen: :3000
     # whether to enable refresh tokens

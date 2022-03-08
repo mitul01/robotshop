@@ -55,9 +55,9 @@ metadata:
 spec:
   tls:
     - hosts:
-      - keycloak.192.168.232.131.nip.io #(keycloak.$(minikube ip).nip.io)
+      - keycloak.192.168.232.130.nip.io #(keycloak.$(minikube ip).nip.io)
   rules:
-  - host: keycloak.192.168.232.131.nip.io #(keycloak.$(minikube ip).nip.io)
+  - host: keycloak.192.168.232.130.nip.io #(keycloak.$(minikube ip).nip.io)
     http:
       paths:
       - path: /
