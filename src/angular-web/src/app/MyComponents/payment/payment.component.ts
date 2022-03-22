@@ -29,7 +29,7 @@ export class PaymentComponent implements OnInit {
   pay(){
     this.http.post<any>('/api/payment/pay/' + this.apiService.currentUser.uniqueid,this.apiService.cart).subscribe(
       data=>{
-        // this.orderid = data.orderid
+        this.orderid = data.orderid
       }
     )
     this.message = "Order Placed " + this.orderid
