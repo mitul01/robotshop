@@ -41,17 +41,16 @@ export class ShippingComponent implements OnInit {
 
   suggestCities($event:Event){
     let location = (<HTMLInputElement>document.getElementById('location')).value;
-    this.locations = [{"uuid":4380869,"code":"in","city":"delhi cantonment","name":"Delhi Cantonment","region":"07","latitude":28.6,"longitude":77.133333},{"uuid":4380870,"code":"in","city":"delhi","name":"Delhi","region":"07","latitude":28.666667,"longitude":77.216667},{"uuid":4380871,"code":"in","city":"delhi paharganj","name":"Delhi Paharganj","region":"07","latitude":28.616667,"longitude":77.216667},{"uuid":4380872,"code":"in","city":"delhi sabzimandi","name":"Delhi Sabzimandi","region":"07","latitude":28.683333,"longitude":77.2}]
-    // this.getCities(this.shippingForm.value.country.code,location)
+    this.getCities(this.shippingForm.value.country.code,location)
     this.disableCalc = false
   }
 
   ngOnInit(): void {
-    // this.getCodes();
+    this.getCodes();
     this.shippingForm = this.fb.group({
       country: [null],
     });
-    this.codes = [{"uuid":26,"code":"au","name":"Australia"},{"uuid":27,"code":"at","name":"Austria"},{"uuid":28,"code":"br","name":"Brasil"},{"uuid":29,"code":"bg","name":"Bulgaria"},{"uuid":30,"code":"ca","name":"Canada"},{"uuid":31,"code":"cz","name":"Czech Republic"},{"uuid":32,"code":"dk","name":"Denmark"},{"uuid":33,"code":"fi","name":"Finland"},{"uuid":34,"code":"fr","name":"France"},{"uuid":35,"code":"de","name":"Germany"},{"uuid":50,"code":"gb","name":"Great Britain"},{"uuid":36,"code":"hu","name":"Hungary"},{"uuid":37,"code":"in","name":"India"},{"uuid":38,"code":"it","name":"Italy"},{"uuid":39,"code":"jp","name":"Japan"},{"uuid":40,"code":"nl","name":"Netherlands"},{"uuid":41,"code":"no","name":"Norway"},{"uuid":42,"code":"pt","name":"Portugal"},{"uuid":43,"code":"ro","name":"Romania"},{"uuid":44,"code":"ru","name":"Russia"},{"uuid":45,"code":"es","name":"Spain"},{"uuid":46,"code":"se","name":"Sweden"},{"uuid":47,"code":"ch","name":"Swiss"},{"uuid":48,"code":"tr","name":"Turkey"},{"uuid":49,"code":"us","name":"USA"}]
+    // this.codes = [{"uuid":26,"code":"au","name":"Australia"},{"uuid":27,"code":"at","name":"Austria"},{"uuid":28,"code":"br","name":"Brasil"},{"uuid":29,"code":"bg","name":"Bulgaria"},{"uuid":30,"code":"ca","name":"Canada"},{"uuid":31,"code":"cz","name":"Czech Republic"},{"uuid":32,"code":"dk","name":"Denmark"},{"uuid":33,"code":"fi","name":"Finland"},{"uuid":34,"code":"fr","name":"France"},{"uuid":35,"code":"de","name":"Germany"},{"uuid":50,"code":"gb","name":"Great Britain"},{"uuid":36,"code":"hu","name":"Hungary"},{"uuid":37,"code":"in","name":"India"},{"uuid":38,"code":"it","name":"Italy"},{"uuid":39,"code":"jp","name":"Japan"},{"uuid":40,"code":"nl","name":"Netherlands"},{"uuid":41,"code":"no","name":"Norway"},{"uuid":42,"code":"pt","name":"Portugal"},{"uuid":43,"code":"ro","name":"Romania"},{"uuid":44,"code":"ru","name":"Russia"},{"uuid":45,"code":"es","name":"Spain"},{"uuid":46,"code":"se","name":"Sweden"},{"uuid":47,"code":"ch","name":"Swiss"},{"uuid":48,"code":"tr","name":"Turkey"},{"uuid":49,"code":"us","name":"USA"}]
   }
 
   calcShipping(){
@@ -71,14 +70,14 @@ export class ShippingComponent implements OnInit {
   }
 
   confirmShipping(){
-    // this.http.post<any>('http://localhost:8080/api/shipping/confirm/',this.shipping).subscribe(
-    //   data=>{
-    //     console.log(data)
-    //     this.apiService.cart = data
-    //   }
-    // )
-    this.apiService.cart.items.push({"qty":1,"sku":"SHIP","name":"Shipping to " + this.shipping.location,"price":this.shipping.cost,"subtotal":this.shipping.cost})
-    this.apiService.cart.total += this.shipping.cost
+    this.http.post<any>('/api/shipping/confirm/',this.shipping).subscribe(
+      data=>{
+        console.log(data)
+        this.apiService.cart = data
+      }
+    )
+    //this.apiService.cart.items.push({"qty":1,"sku":"SHIP","name":"Shipping to " + this.shipping.location,"price":this.shipping.cost,"subtotal":this.shipping.cost})
+    //this.apiService.cart.total += this.shipping.cost
     this.router.navigate(['/', 'payment']);
   }
 }
