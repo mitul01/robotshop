@@ -12,13 +12,6 @@ import { data } from 'src/data';
 })
 export class AppComponent {
   title = 'robotshop-web';
-  data = {
-    uniqueid: '',
-    cart: {
-        total: 0
-    },
-    categories: ["Medical","Engginering"],
-  };
   currentUser!: data
   products!: products[];
   categories!: any;
@@ -33,7 +26,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/api/catalogue/categories')
+    this.http.get('/api/catalogue/categories')
     .subscribe(Response => {
       this.categories=Response;
     });
@@ -68,7 +61,7 @@ export class AppComponent {
   }
 
   search(text:string){
-    this.http.get('http:localhost:8080/api/catalogue/search/'+ text)
+    this.http.get('/api/catalogue/search/'+ text)
     .subscribe(Response => {
       console.log(Response);
       this.searchResults= Response;
