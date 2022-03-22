@@ -1,0 +1,8 @@
+ul.products {
+    margin: 5px;
+}
+.category {
+    font-size: 14pt;
+    cursor: context-menu;
+    text-transform: capitalize;
+}

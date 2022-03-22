@@ -1,0 +1,39 @@
+<!-- product details -->
+<div>
+    <div class="message">
+        {{ message }}
+    </div>
+
+    <h3>{{ product.name }}</h3>
+    <div class="productimage">
+        <img src="assets/images/{{ product.sku }}.png"/>
+    </div>
+    <div class="rating">
+        Rating
+        <span *ngIf="rating.avg_rating != 0">
+            {{ rating.avg_rating.toFixed(1) }} from {{ rating.rating_count }} votes
+        </span>
+        <span *ngIf="rating.avg_rating === 0">
+            No votes yet. Vote now.
+        </span>
+        <div>
+            <span *ngFor="let vote of [ 1, 2, 3, 4, 5 ]">
+                <img id="vote-{{ vote }}" class="vote-star" alt="{{ vote }}" (mouseover)="glowstan(vote, 1.0);" (mouseout)="glowstan(vote, 0.5); "src="assets/images/instana_icon_square.png" (click)="rateProduct(vote);"/>
+            </span>
+        </div>
+    </div>
+    <div class="description">
+        {{ product.description }}
+    </div>
+    <div class="productcart">
+        <!-- Price &euro;{{ products[id].price.toFixed(2) }} -->
+        <span *ngIf="product.instock === 0">
+            Out of stock
+        </span>
+        <span *ngIf="product.instock > 0">
+            Quantity <input type="number" size="2" min="1" max="10" [(ngModel)]="quantity"/>
+            <button (click)="addToCart($event);">Add to cart</button>
+        </span>
+    </div>
+</div>
+

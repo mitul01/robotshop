@@ -1,0 +1,43 @@
+<!-- payment template -->
+<div>
+    <h3>Review your order</h3>
+    <div *ngIf="currentUser.cart.total!=0">
+        <table>
+            <tr>
+                <th>QTY</th>
+                <th>Name</th>
+                <th>Sub Total</th>
+            </tr>
+            <tr *ngFor="let item of totalcart.items">
+                <td>{{ item.qty }}</td>
+                <td>{{ item.name }}</td>
+                <td class="currency">&euro;{{ item.price.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Inc Tax</td>
+                <td class="currency">&euro;{{ totalcart.tax.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Total</td>
+                <td class="currency">&euro;{{ totalcart.total.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button ng-disabled="data.buttonDisabled" (click)="pay();">Pay Now</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="message">
+        {{ message }}
+    </div>
+    <div *ngIf="done==true">
+        Thank you for your order
+        <a class="cont" routerLink="/login-register">Continue shopping</a>
+    </div>
+</div>

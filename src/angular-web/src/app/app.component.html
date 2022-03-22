@@ -1,0 +1,46 @@
+  <div>
+      <h1><a href="/">Stan's Robot Shop</a></h1>
+      <span id="stan">
+          <img src="assets/images/stan.png"/>
+      </span>
+      <span id="search">
+          <form>
+              <input type="text" size="20" [(ngModel)]="searchText" name="searchText"/>
+              <button ng-click="search();">Search</button>
+          </form>
+      </span>
+  
+      <div class="row">
+          <div class="nav column">
+              <h3><a routerLink="/login-register" routerLinkActive="active">Login / Register</a></h3>
+              <h3><a routerLink="/cart" routerLinkActive="active">Cart</a></h3>
+              <!-- <div *ngIf="currentUser.cart.total === 0" class="carttotal">
+                  Empty
+              </div>
+              <div *ngIf="currentUser.cart.total != 0" class="carttotal">
+                  &euro;{{ cart.total }}
+              </div> -->
+              <h3>Categories</h3>
+              <ul class="products">
+                  <li *ngFor="let cat of categories">
+                      <span (click)="getProducts(cat)" class="category">{{ cat }}</span>
+                        <li *ngFor="let prod of products">
+                              <a class="product" [routerLink]="['/product', prod.sku]">{{ prod.name }}</a>
+                          </li>
+                      </ul>
+          </div>
+            
+  
+          <!-- main display area -->
+          <div class="main column">
+              <div ng-view>
+                <router-outlet ></router-outlet>
+              </div>
+          </div>
+      </div>
+  
+      <div class="footer">
+          <!-- {{ currentUser.uniqueid }} -->
+      </div>
+  
+  </div>

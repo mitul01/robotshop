@@ -1,0 +1,31 @@
+<!-- shipping template -->
+<div>
+    <h3>Shipping information</h3>
+    <div [formGroup]="shippingForm">
+        Select country 
+        <select formControlName="country">
+            <option [ngValue]="null" disabled>Select Country</option>
+            <option *ngFor="let code of codes" [ngValue]="code">{{code.name}}</option>
+          </select>
+        <!-- <select (ngModelChange)="countryChanged();" [(ngModel)]="selectedCountry" ng-options="opt.name for opt in data.countries track by opt.code"></select> -->
+    </div>
+    Enter location
+    <input type="text" (keyup)="suggestCities($event)" id="location" list="dynmicUserIds" />
+      <datalist id="dynmicUserIds">
+        <option *ngFor="let item of locations" [ngValue]="item">{{item.name}}</option>
+      </datalist>
+    <!-- <div>
+        Enter location <input id="location" type="text" size="20" [(ngModel)]="selectedLocation" ng-disabled="data.disableCity"/>
+    </div> -->
+    <div>
+        <button (click)="calcShipping();" [disabled]="disableCalc">Calculate</button>
+    </div>
+    <!-- add in shipping distance and cost -->
+    <div *ngIf="shipping">
+        <div>Distance  {{shipping.distance}} km</div>
+        <div>Cost &euro; {{shipping.cost.toFixed(2)}} </div>
+        <div>
+            <button (click)="confirmShipping();">Confirm</button>
+        </div>
+    </div>
+</div>
