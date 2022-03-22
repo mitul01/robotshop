@@ -13,8 +13,8 @@ export class ApiService {
   currentUser!: data;
   cart!: Cart
   loggedIn!: boolean
-  baseURL: string = "http://localhost:8080/";
-  // baseURL: string = "/";
+  // baseURL: string = "http://localhost:8080/";
+  baseURL: string = "/";
  
   constructor(private http: HttpClient) {
     this.loggedIn = false
