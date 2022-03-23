@@ -74,7 +74,12 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   login(event: Event){
-    this.http.post<{name:string,password:string}>('/api/user/login',
+    this.apiService.currentUser = {
+      uniqueid: "",
+      user: {name:"",email:"",password:"",password2:""},
+      cart: {total:0}
+    }
+    this.http.post<{id:number,name:string,password:string,email:string}>('/api/user/login',
     {
     name:this.login_name,
     password:this.login_password,
@@ -82,7 +87,13 @@ export class LoginRegisterComponent implements OnInit {
   ).subscribe(
     (data)=>{
       console.log(data)
-      // this.apiService.currentUser = data
+      // {_id: '623aae8fad1c52c71ac93f7f', name: 'stan', password: 'bigbrain', email: 'stan@instana.com'}
+      this.apiService.currentUser.user.name = data.name
+      this.apiService.currentUser.uniqueid = data.name
+      this.apiService.currentUser.cart.total = 0
+      this.apiService.currentUser.user.email = data.email
+      this.apiService.currentUser.user.password = data.password
+      this.apiService.currentUser.user.password2 = data.password
     }
   )
   if (this.login_name && this.login_password){

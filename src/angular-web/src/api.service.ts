@@ -53,7 +53,7 @@ export class ApiService {
   }
 
   getCities(countryCode:string,term:string):Observable<{uuid:number, code: string, city:string, name: string, region:string,latitude:number,longitude:number}[]>{
-    return this.http.get<{uuid:number, code: string, city:string, name: string, region:string,latitude:number,longitude:number}[]>(this.baseURL + '/api/shipping/match/'+ countryCode + '/' + term)
+    return this.http.get<{uuid:number, code: string, city:string, name: string, region:string,latitude:number,longitude:number}[]>(this.baseURL + 'api/shipping/match/'+ countryCode + '/' + term)
   }
 
   calcShipping(uuid:number):Observable<{distance:number,cost:number}>{

@@ -70,7 +70,7 @@ export class ShippingComponent implements OnInit {
   }
 
   confirmShipping(){
-    this.http.post<any>('/api/shipping/confirm/',this.shipping).subscribe(
+    this.http.post<any>('/api/shipping/confirm/'+this.apiService.currentUser.uniqueid,this.shipping).subscribe(
       data=>{
         console.log(data)
         this.apiService.cart = data

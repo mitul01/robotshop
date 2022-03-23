@@ -57,4 +57,3 @@ else
 fi
 
 exec nginx-debug -g "daemon off;"
-
