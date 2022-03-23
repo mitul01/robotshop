@@ -4,14 +4,17 @@ metadata:
   name: rabbitmq
   labels:
     service: rabbitmq
+    app: rabbitmq
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: rabbitmq
+      app: rabbitmq
   template:
     metadata:
       labels:
+        app: rabbitmq
         service: rabbitmq
     spec:
       {{ if .Values.psp.enabled }}

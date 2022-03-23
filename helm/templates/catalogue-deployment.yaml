@@ -3,15 +3,18 @@ kind: Deployment
 metadata:
   name: catalogue
   labels:
+    app: catalogue
     service: catalogue
 spec:
   replicas: 1
   selector:
     matchLabels:
+      app: catalogue
       service: catalogue
   template:
     metadata:
       labels:
+        app: catalogue
         service: catalogue
     spec:
       {{ if .Values.psp.enabled }}

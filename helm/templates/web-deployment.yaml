@@ -4,15 +4,18 @@ metadata:
   name: web
   labels:
     service: web
+    app: web
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: web
+      app: web
   template:
     metadata:
       labels:
         service: web
+        app: web
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

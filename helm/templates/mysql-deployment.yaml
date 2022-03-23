@@ -4,15 +4,18 @@ metadata:
   name: mysql
   labels:
     service: mysql
+    app: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: mysql
+      app: mysql
   template:
     metadata:
       labels:
         service: mysql
+        app: mysql
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

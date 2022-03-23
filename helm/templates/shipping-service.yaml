@@ -4,6 +4,7 @@ metadata:
   name: shipping
   labels:
     service: shipping
+    app: shipping
 spec:
   ports:
   - name: http

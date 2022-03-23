@@ -4,6 +4,7 @@ metadata:
   name: payment
   labels:
     service: payment
+    app: payment
 spec:
   ports:
   - name: http

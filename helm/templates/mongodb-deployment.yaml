@@ -4,15 +4,18 @@ metadata:
   name: mongodb
   labels:
     service: mongodb
+    app: mongodb
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: mongodb
+      app: mongodb
   template:
     metadata:
       labels:
         service: mongodb
+        app: mongodb
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

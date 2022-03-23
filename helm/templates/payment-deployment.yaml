@@ -4,18 +4,21 @@ metadata:
   name: payment
   labels:
     service: payment
+    app: payment
     stage: prod
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: payment
+      app: payment
       stage: prod
   template:
     metadata:
       labels:
         service: payment
         stage: prod
+        app: payment
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

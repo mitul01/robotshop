@@ -4,15 +4,18 @@ metadata:
   name: ratings
   labels:
     service: ratings
+    app: ratings
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: ratings
+      app: ratings
   template:
     metadata:
       labels:
         service: ratings
+        app: ratings
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

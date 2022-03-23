@@ -4,14 +4,17 @@ metadata:
   name: dispatch
   labels:
     service: dispatch
+    app: dispatch
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: dispatch
+      app: dispatch
   template:
     metadata:
       labels:
+        app: dispatch
         service: dispatch
     spec:
       {{ if .Values.psp.enabled }}

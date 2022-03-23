@@ -4,6 +4,7 @@ metadata:
   name: web
   labels:
     service: web
+    app: web
 spec:
   ports:
   - name: http

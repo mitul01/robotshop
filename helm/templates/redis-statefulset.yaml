@@ -3,17 +3,20 @@ kind: StatefulSet
 metadata:
   labels:
     service: redis
+    app: redis
   name: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: redis
+      app: redis
   serviceName: redis
   template:
     metadata:
       labels:
         service: redis
+        app: redis
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

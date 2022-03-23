@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     service: mysql
+    app: mysql
   name: mysql
 spec:
   ports:

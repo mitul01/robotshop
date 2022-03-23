@@ -6,6 +6,7 @@ metadata:
   name: dispatch
   labels:
     service: dispatch
+    app: dispatch
 spec:
   clusterIP: None
   ports:

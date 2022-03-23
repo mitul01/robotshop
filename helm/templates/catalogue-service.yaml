@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     service: catalogue
+    app: catalogue
   name: catalogue
 spec:
   ports:
