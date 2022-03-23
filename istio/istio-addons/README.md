@@ -12,13 +12,13 @@ addon.
 To quickly deploy all addons:
 
 ```shell script
-kubectl apply -f samples/addons
+kubectl apply -f istio-addons/.
 ```
 
 Alternatively, you can deploy individual addons:
 
 ```shell script
-kubectl apply -f samples/addons/prometheus.yaml
+kubectl apply -f istio-addons/prometheus.yaml
 ```
 
 ## Addons
@@ -74,7 +74,7 @@ For more information about integrating with Jaeger, please see the [Jaeger integ
 
 [Zipkin](https://zipkin.io/) is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in service architectures. Features include both the collection and lookup of this data.
 
-Zipkin is an alternative to Jaeger and is not deployed by default. To replace Jaeger with Zipkin, run `kubectl apply -f samples/addons/extras/zipkin.yaml`.
+Zipkin is an alternative to Jaeger and is not deployed by default. To replace Jaeger with Zipkin, run `kubectl apply -f istio-addons/extras/zipkin.yaml`.
 You may also want to remove the Jaeger deployment, which will not be used, with `kubectl delete deployment jaeger`, or avoid installing it
 to begin with by following the selective install steps in [Getting Started](#getting-started).
 
@@ -85,7 +85,7 @@ For more information about integrating with Zipkin, please see the [Zipkin integ
 The [Prometheus Operator](https://github.com/coreos/prometheus-operator) manages and operators a Prometheus instance.
 
 As an alternative to the standard Prometheus deployment, we provide a `ServiceMonitor` to monitor the Istio control plane and `PodMonitor`
-Envoy proxies. To use these, make sure you have the Prometheus operator deployed, then run `kubectl apply -f samples/addons/extras/prometheus-operator.yaml`.
+Envoy proxies. To use these, make sure you have the Prometheus operator deployed, then run `kubectl apply -f istio-addons/extras/prometheus-operator.yaml`.
 
 Note: The example `PodMonitor` requires [metrics merging](https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-metrics-merging) to be enabled. This is enabled by default.
 
