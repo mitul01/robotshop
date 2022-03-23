@@ -4,13 +4,13 @@ image:
   repo: robotshop
   version: latest
   pullPolicy: IfNotPresent
-  cart-image: docker.io/mitultan/cart:v2
-  catalogue-image: docker.io/mitultan/catalogue:v1
-  user-image: docker.io/mitultan/user:v1 
-  payment-image: docker.io/mitultan/payment:v2
+  cartimage: docker.io/mitultan/cart:v2
+  catalogueimage: docker.io/mitultan/catalogue:v1
+  userimage: docker.io/mitultan/user:v1 
+  paymentimage: docker.io/mitultan/payment:v2
 
 ingress:
-  web: web.192.168.232.131.nip.io
+  web: web.192.168.232.132.nip.io
   keycloak: keycloak.192.168.232.131.nip.io
 
 # Alternative payment gateway URL
@@ -28,6 +28,15 @@ eum:
 
 # Pod Security Policy
 psp:
+  enabled: false
+
+tracing:
+  enabled: false
+
+wavefront:
+  enabled: false
+
+keycloak:
   enabled: false
 
 # For the mini ones minikube, minishift set to true

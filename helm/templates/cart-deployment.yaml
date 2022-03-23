@@ -19,7 +19,7 @@ spec:
       {{ end }}
       containers:
       - name: cart
-        image: {{ .Values.image.cart-image }}
+        image: {{ .Values.image.cartimage }}
         #image: {{ .Values.image.repo }}/rs-cart:{{ .Values.image.version }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         # agent networking access
@@ -37,7 +37,8 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
-            # sidecar agent
+      # sidecar agent
+      {{ if .Values.tracing.enabled }}
       - name: jaeger-agent
         image: jaegertracing/jaeger-agent:1.30.0
         imagePullPolicy: IfNotPresent
@@ -61,7 +62,9 @@ spec:
           #- --reporter.grpc.host-port=dns:///jaeger-collector-headless.observability:14250
           - --reporter.type=grpc
           - --reporter.grpc.host-port=wavefront-proxy.default:14250
-  # telegraf-wavefront sidecar
+      {{ end }}  
+      # telegraf-wavefront sidecar
+      {{ if .Values.wavefront.enabled }}
       - name: telegraf
         image: wavefronthq/telegraf-sidecar
         ports:
@@ -108,3 +111,4 @@ spec:
           sources:
           - configMap:
               name: telegraf-prometheus-config-cart
+      {{ end }}

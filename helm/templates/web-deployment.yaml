@@ -37,7 +37,8 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
-      # keycloak sidecar 
+      # keycloak sidecar
+      {{ if .Values.keycloak.enabled }} 
       - name: gatekeeper
         image: quay.io/keycloak/keycloak-gatekeeper
         args:
@@ -58,4 +59,5 @@ spec:
       - name : gatekeeper-files
         configMap:
           name: gatekeeper-files
+      {{ end }}
       restartPolicy: Always

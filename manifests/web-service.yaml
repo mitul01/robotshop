@@ -8,8 +8,9 @@ spec:
   ports:
   - name: http
     port: 8080
-    targetPort: service
-    #nodePort: 30007
+    targetPort: 8080
+    #targetPort: service
+    nodePort: 30007
   selector:
     service: web
   type: ClusterIP

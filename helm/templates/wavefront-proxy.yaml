@@ -1,5 +1,5 @@
 # Need to change YOUR_CLUSTER and YOUR_API_TOKEN accordingly
-
+{{ if .Values.wavefront.enabled }}
 apiVersion: apps/v1
 # Kubernetes versions after 1.9.0 should use apps/v1
 # Kubernetes version 1.8.x should use apps/v1beta2
@@ -51,7 +51,9 @@ spec:
           protocol: TCP
         securityContext:
           privileged: false
+{{ end }}
 ---
+{{ if .Values.wavefront.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -83,3 +85,4 @@ spec:
   #  protocol: TCP
   selector:
     app: wavefront-proxy
+{{ end }}
