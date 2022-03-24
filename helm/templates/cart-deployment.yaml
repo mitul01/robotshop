@@ -5,17 +5,20 @@ metadata:
   labels:
     app: cart
     service: cart
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: cart
       service: cart
+      version: v1
   template:
     metadata:
       labels:
         app: cart
         service: cart
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

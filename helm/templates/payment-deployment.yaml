@@ -5,6 +5,7 @@ metadata:
   labels:
     service: payment
     app: payment
+    version: v1
     stage: prod
 spec:
   replicas: 1
@@ -13,12 +14,14 @@ spec:
       service: payment
       app: payment
       stage: prod
+      version: v1
   template:
     metadata:
       labels:
         service: payment
         stage: prod
         app: payment
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

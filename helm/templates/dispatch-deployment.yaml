@@ -5,17 +5,20 @@ metadata:
   labels:
     service: dispatch
     app: dispatch
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: dispatch
       app: dispatch
+      version: v1
   template:
     metadata:
       labels:
         app: dispatch
         service: dispatch
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

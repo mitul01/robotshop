@@ -4,6 +4,7 @@ metadata:
   labels:
     service: redis
     app: redis
+    version: v1
   name: redis
 spec:
   replicas: 1
@@ -11,12 +12,14 @@ spec:
     matchLabels:
       service: redis
       app: redis
+      version: v1
   serviceName: redis
   template:
     metadata:
       labels:
         service: redis
         app: redis
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

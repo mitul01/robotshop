@@ -10,7 +10,7 @@ image:
   paymentimage: docker.io/mitultan/payment:v2
 
 ingress:
-  web: web.192.168.232.132.nip.io
+  web: web.192.168.232.130.nip.io
   keycloak: keycloak.192.168.232.131.nip.io
 
 # Alternative payment gateway URL

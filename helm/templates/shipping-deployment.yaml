@@ -5,17 +5,20 @@ metadata:
   labels:
     service: shipping
     app: shipping
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: shipping
       app: shipping
+      version: v1
   template:
     metadata:
       labels:
         service: shipping
         app: shipping
+        version: v1
     spec:
       containers:
       - name: shipping

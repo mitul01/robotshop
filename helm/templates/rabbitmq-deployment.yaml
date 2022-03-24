@@ -5,17 +5,20 @@ metadata:
   labels:
     service: rabbitmq
     app: rabbitmq
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: rabbitmq
       app: rabbitmq
+      version: v1
   template:
     metadata:
       labels:
         app: rabbitmq
         service: rabbitmq
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop

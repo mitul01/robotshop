@@ -5,17 +5,20 @@ metadata:
   labels:
     service: user
     app: user
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       service: user
       app: user
+      version: v1
   template:
     metadata:
       labels:
         service: user
         app: user
+        version: v1
     spec:
       {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop
