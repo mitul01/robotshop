@@ -39,6 +39,9 @@ wavefront:
 keycloak:
   enabled: false
 
+istio:
+  enabled: true
+
 # For the mini ones minikube, minishift set to true
 nodeport: true
 
