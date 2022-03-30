@@ -29,13 +29,16 @@ provider "helm" {
   }
 }
 
-resource "kubernetes_namespace" "minikube-namespace-robot-shop" {
+resource "kubernetes_namespace" "namespace-robot-shop" {
   metadata {
     name = "robot-shop"   
     labels = {
       istio-injection="enabled"
         }
     }
+    depends_on = [
+      kind_cluster.default
+    ]
 }
 resource "helm_release" "robot-shop" {
   name = "robot-shop"
@@ -48,4 +51,7 @@ resource "helm_release" "robot-shop" {
     name  = "istio.enabled"
     value = "false"
   }
+  depends_on = [
+    kind_cluster.default,kubernetes_namespace.namespace-robot-shop
+  ]
 }
